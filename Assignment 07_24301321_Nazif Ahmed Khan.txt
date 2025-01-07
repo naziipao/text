@@ -248,3 +248,52 @@ public class CinemexTicket extends MovieTicket{
                 + "\nStatus: " + paymentStatus;
     }
 }
+
+//task8
+
+public class KKTea extends Tea{
+    public int weight;
+    public int teaBagAmount;
+    public static int totalSale;
+    public static int totalKK;
+    public static int totalFlav;
+     public KKTea(int n1, int n2){
+        super("KK Regular Tea" , n1);
+        teaBagAmount = n2;
+        weight = teaBagAmount * 2;
+    }
+
+    public static void updateSoldStatusRegular(KKTea obj){
+        obj.status = true;
+        totalSale++;
+        totalKK++;
+    }
+
+    public static void totalSales(){
+        System.out.println("Total Sales: " + totalSale + "\nKK Regular Tea: "
+        + totalKK);
+        if(totalFlav != 0) {
+            System.out.println("KK Flavoured Tea: " + totalFlav);
+        }
+    }
+
+    public void productDetail(){
+        super.productDetail();
+        System.out.println("Weight: " + weight + ", Tea Bags: " + teaBagAmount);
+    }
+}
+
+public class KKFlavouredTea extends KKTea{
+
+    public KKFlavouredTea(String s, int n1, int n2){
+        super(n1, n2);
+        name = s;
+        weight = teaBagAmount*2;
+    }
+
+    public static void updateSoldStatusFlavoured(KKFlavouredTea obj){
+        obj.status = true;
+        totalSale++;
+        totalFlav++;
+    }
+}
