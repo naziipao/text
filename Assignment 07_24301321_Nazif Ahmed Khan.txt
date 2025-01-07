@@ -1,0 +1,250 @@
+//task1
+
+public class BBAStudent extends Student {
+
+    public BBAStudent(){
+        setName("Default");
+        setDepartment("BBA");
+    }
+
+    public BBAStudent(String s){
+        setName(s);
+        setDepartment("BBA");
+    }
+
+
+}
+
+//task2
+
+public class CheckingAccount extends Account {
+    public static int count;
+
+    public CheckingAccount() {
+        super(0.0);
+        count++;
+    }
+
+    public CheckingAccount(double d) {
+        super(d);
+        count++;
+    }
+}
+
+//task3
+
+public class Dog extends Animal{
+    public String breed;
+    public Dog(String s1, int n, String s2, String s3){
+        super(s1, n, s2);
+        breed = s3;
+    }
+
+    public String info(){
+        return super.info() + "Breed: " + breed;
+    }
+
+    public void makeSound(){
+        System.out.println( color + " color " + name +" is barking");
+    }
+}
+
+public class Cat extends Animal{
+    public String breed;
+    public Cat(String s1, int n, String s2, String s3){
+        super(s1, n, s2);
+        breed = s3;
+    }
+
+    public String info(){
+        return super.info() + "Breed: " + breed;
+    }
+
+    public void makeSound(){
+        System.out.println(color +  " color " + name + " is meowing");
+    }
+
+}
+
+//task4
+
+public class Vehicle2010 extends Vehicle{
+
+    public Vehicle2010(){
+        x = 0;
+        y = 0;
+    }
+
+    public String toString(){
+        return super.toString();
+    }
+
+    public void moveLowerLeft(){
+        moveDown();
+        moveLeft();
+    }
+
+    public void moveUpperRight(){
+        moveUp();
+        moveRight();
+    }
+
+    public void moveLowerRight(){
+        moveDown();
+        moveRight();
+    }
+}
+
+//task5
+
+public class ComplexNumber extends RealNumber {
+    public double imagineValue;
+    public ComplexNumber(){
+        super(1.0);
+        imagineValue = 1.0;
+    }
+
+    public ComplexNumber(double d1, double d2){
+        super(d1);
+        imagineValue = d2;
+    }
+
+    public String toString(){
+        return super.toString() + "\nImaginaryPart: " + imagineValue;
+    }
+}
+
+//task6
+
+public class Manager extends Employee{
+    public double bonus;
+    public double increment;
+    public double finalSalary;
+    public Manager(String s, int n1, int n2, int n3){
+        super(s, n1, n2);
+        bonus = n3;
+    }
+
+    public void calculateSalary(){
+        double calcBonus = (bonus/100) * getBaseSalary();
+        finalSalary = getBaseSalary() + calcBonus;
+    }
+
+    public void requestIncrement(double n){
+        if(getHoursWorked()>100){
+            increment = n;
+            setBaseSalary(getBaseSalary() + increment);
+            System.out.println((int)increment + "$ increment approved.");
+        }
+        else if(getHoursWorked()>80){
+            increment = n/2;
+            setBaseSalary(getBaseSalary() + increment);
+            System.out.println((int)increment + "$ Increment approved.");
+        }
+        else{
+            System.out.println("Increment denied.");
+        }
+    }
+
+    public void setHoursWorked(int n){
+        super.setHoursWorked(n);
+    }
+
+    public void displayInfo(){
+        super.displayInfo();
+        System.out.println("Bonus: " + bonus + "%" + "\nFinal Salary: " + finalSalary);
+    }
+}
+
+public class Developer extends Employee{
+    public String language;
+    public double finalSalary;
+    public Developer(String s1, int n1, int n2, String s2){
+        super(s1, n1, n2);
+        language = s2;
+    }
+
+    public void calculateSalary(){
+        if(language == "Java"){
+            finalSalary = getBaseSalary() + 700;
+        }
+        else{
+            finalSalary = getBaseSalary();
+        }
+    }
+
+    public void displayInfo(){
+        super.displayInfo();
+        System.out.println("Language: " + language + "\nFinal Salary: " + finalSalary);
+    }
+}
+
+//task7
+
+public class CinemexTicket extends MovieTicket{
+    private static int ticketCount;
+    public boolean checkPayment = false;
+    public int time;
+    public String genre;
+    public String paymentStatus = "Not paid";
+    public String ticketId;
+    public CinemexTicket(String name, String showtime, String genre, String date){
+        super(name, date, showtime, seatPrices[0]);
+        this.genre = genre;
+        seat = seatTypes[0];
+        ticketCount++;
+        //ticket id generator
+        String [] arr1 = seat.split(""); //first letter of seat type
+        ticketId = getMovie() + "-" + arr1[0] + "-" + ticketCount;
+    }
+
+    public CinemexTicket(String name, String time, String genre, String date, String seat){
+        super(name, date, time, 0.0);
+        super.seat = seat;
+        this.genre = genre;
+        for(int i = 0; i<seatTypes.length; i++){
+            if(seat.equals(seatTypes[i])){
+                setPrice(seatPrices[i]);
+            }
+        }
+        ticketCount++;
+        String [] arr1 = seat.split("");
+        ticketId = getMovie() + "-" + arr1[0] + "-" + ticketCount;
+    }
+
+    public static int getTotalTickets(){
+        return ticketCount;
+    }
+
+    public void calculateTicketPrice(){
+        String [] arr = showtime.split(":");
+        time = Integer.parseInt(arr[0]); //time coverted to int
+        for(int i = 0; i< seatTypes.length; i++){
+            if(seat == seatTypes[i]){
+                setPrice(seatPrices[i]);
+            }
+        }
+        if(time >=18 && time<=23){
+            setPrice(getPrice() +  getPrice()*(nightShowCharge/100.0));
+        }
+        System.out.println("Ticket price is calculated successfully.");
+    }
+
+    public String confirmPayment(){
+        if(checkPayment){
+            return "Ticket price is already paid!";
+        }
+        else if(checkPayment == false){
+            checkPayment = true;
+            paymentStatus = "Paid";
+            return "Payment Successful.";
+        }
+        return "";
+    }
+
+    public String toString(){
+        return "Ticket ID: " + ticketId + "\nMovie: " + getMovie()+ "\nShowtime: " + showtime + "\nDate: " + date
+                + "\nGenre: " + genre + "\nSeat type: " + seat + "\nPrice(tk): " + getPrice()
+                + "\nStatus: " + paymentStatus;
+    }
+}
