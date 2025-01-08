@@ -1,0 +1,41 @@
+public class Nokia extends Mobile{
+    public double simBalance;
+    public Nokia(String model, boolean simCheck, String imei, int balance){
+        super(model, imei, simCheck);
+        simBalance = balance;
+    }
+
+    public void activateSimCard(){
+        super.activateSimCard();
+    }
+
+    public String dialCall(String num){
+        if(simCardStatus) {
+            if (simBalance == 0) {
+                return "Insufficient balance! Please recharge";
+            } else {
+                String[] arr1 = num.split("", 4);
+                String temp = arr1[0] + arr1[1] + arr1[2];
+                if (getCountryName(temp) == "Bangladesh") {
+                    return "Dialing the number " + num + " to Bangladesh region.";
+                } else if (getCountryName(temp) == "USA") {
+                    return "Dialing number " + num + " to USA region";
+                } else {
+                    return "Dialing is not allowed in this region.";
+                }
+            }
+        }
+        else{
+            return "No SIM card available! Please check the SIM card connectivity.";
+        }
+    }
+
+    public void rechargeSIMCard(int n){
+        simBalance += n;
+        System.out.println("Recharge successful! Current balance " + simBalance + "TK.");
+    }
+
+    public String toString(){
+        return super.toString() + "\nBalance: " + simBalance;
+    }
+}
